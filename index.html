@@ -11,24 +11,40 @@
 
   <body>
     <header id="header" class="hide header"> 
-      <h1><a href="">View Highscores</a></h1>
-      <h2 id="timer">Timer</h2>
+      <div class="view-highscore"><a href="">View Highscores</a></div>
+      <div class="timer" id="quiz-timer"></div>
     </header>
 
     <main class="container">
       <div id="question-section" class="hide">
-        <div id="question" class="question">Question</div>
+        <div id="question" class="question"></div>
         <div id="answer-buttons" class="answer-buttons">
-          <button class="btn">Answer 1</button>
-          <button class="btn">Answer 2</button>
-          <button class="btn">Answer 3</button>
-          <button class="btn">Answer 4</button>
+          <button class="btn" id="btn"></button>
+          <button class="btn" id="btn"></button>
+          <button class="btn" id="btn"></button>
+          <button class="btn" id="btn"></button>
         </div>
+        <div class="end" id="end"></div>
       </div>
+
       <div id="start-screen" class="start-screen">
         <h1>Coding Quiz!</h1>
         <p>This is a coding quiz to test your knowledge. You will have 75 seconds to finish the quiz, but be careful! Every wrong answer will reduce your time and in turn your score! Go on and get in there and good luck!</p>
         <button id="start-button" class="btn">Start</button>
+      </div>
+
+      <div id="end-screen" class="end-screen hide">
+        <div class="end-text" id="end-text"></div>
+        <div class="end-score" id="end-score"></div>
+        <div class="input-area">
+          <label for="initials">Your initials: </label>
+          <input type="text" name="initials"  id="initials" class="input">
+          <button class="submit" id="submit">Submit</button>
+        </div>
+      </div>
+
+      <div class="highscores">
+        <ul class="highscore-list" id="highscore-list"></ul>
       </div>
     </main>
     <script src="./assets/js/script.js"></script>
