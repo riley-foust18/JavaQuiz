@@ -9,12 +9,11 @@ var result = document.querySelector("#end");
 var submitBtn = document.querySelector("#submit");
 var highscoreList = document.querySelector("#highscore-list");
 var initials = document.querySelector("#initials");
+var viewHighscoreBtn = document.querySelector("#view-highscore")
 
 var countdown = 75;
 var currentQuestion = 0;
 var score = 0;
-var newUserId = 0;
-var newScoreId = 0;
 
 var timer = function() {
   quizTimerEl.textContent = `Time Left: ${Math.max(countdown, 0)}`;
@@ -71,6 +70,7 @@ var questionLoop = function(question) {
 }
 
 var createAnswers = function(answers) {
+  viewHighscoreBtn.addEventListener("click", viewHighscores)
   for (var i = 0; i < answers.length; i++) {
     var newAnswer = document.querySelector("#btn");
     newAnswer.className = "btn"
@@ -115,9 +115,6 @@ var wrongAnswer = function() {
   }
 }
 
-var storedScores = JSON.parse(localStorage.getItem("Highscores"));
-var scoreList = []
-
 var endQuiz = function() {
   headerEl.className = "hide"
   endScreen.classList.remove("hide");
@@ -132,43 +129,54 @@ var endQuiz = function() {
       alert("Please enter your initials.")
     } 
     else if (initials.value.length > 2) {
-      alert("Please use only 2 letters")
+      alert("Please use only 2 letters.")
     }
-    else {
-      var userScore = `${initials.value} ${score}`
-      // if (storedScores === null) {
-        scoreList.push(userScore)
-        localStorage.setItem("Highscores", JSON.stringify(scoreList));
-        scoreList.push(storedScores)
-        console.log(scoreList)
-        // var test = JSON.parse(JSON.stringify(scoreList))
-        // test.push('qq 31')
-        // console.log(test)
-        // localStorage.setItem("Highscores", JSON.stringify(test));
-        // console.log(storedScores)
-        // test.push("tt 22")
-        // console.log(test)
-        // console.log(userScore)
-        // viewHighscores();
-      // }
-      // else {
-      //   storedScores.push(userScore)
-      //   localStorage.setItem("Highscores", JSON.stringify(storedScores));
-      //   viewHighscores();
-      // }
+    else if (initials.value.length < 2) {
+      alert("Please use at least 2 letters.")
     }
+    viewHighscores();
   });
 }
 
-// var viewHighscores = function() {
-//   endScreen.className = "hide"
-//   headerEl.className = "hide"
-//   console.log(scoreList)
-//   // for (var i = 0; i < storedScores.length; i++) {
-//   //   var scoreListEl = document.createElement("li");
-//   //   var br = document.createElement("br")
-//   //   scoreListEl.textContent = storedScores[i];
-//   //   highscoreList.appendChild(scoreListEl);
-//   //   highscoreList.appendChild(br)
-//   // }
-// }
+var viewHighscores = function() {
+  endScreen.className = "hide"
+  headerEl.className = "hide"
+  questionSectionEl.classList.add("hide")
+  var highscoreContainer = document.querySelector("#highscore-container")
+  highscoreContainer.classList.remove("hide")
+  var storedScores = JSON.parse(localStorage.getItem("Highscores"));
+  var scoreList = []
+  var userScore = `${initials.value} - ${score}`
+  var storedScores = JSON.parse(localStorage.getItem("Highscores"))
+  var highscoreLoop = function() {
+    for (var i = 0; i < scoreList.length; i++) {
+      var scoreListEl = document.createElement("li");
+      scoreListEl.textContent = scoreList[i];
+      highscoreList.appendChild(scoreListEl);
+    }
+  }
+  if (initials.value === "") {
+    scoreList = storedScores
+    console.log(scoreList)
+    if (storedScores === null) {
+    var scoreListEl = document.createElement("li");
+    scoreListEl.textContent = "No Highscores";
+    highscoreList.appendChild(scoreListEl);
+    }
+    else {
+      highscoreLoop();
+    }
+    
+  }
+  else if (storedScores === null) {
+    scoreList.push(userScore.toUpperCase());
+    localStorage.setItem("Highscores", JSON.stringify(scoreList));
+    highscoreLoop();
+  }
+  else {
+    scoreList = storedScores
+    scoreList.push(userScore.toUpperCase())
+    localStorage.setItem("Highscores", JSON.stringify(scoreList));
+    highscoreLoop();
+  }
+}

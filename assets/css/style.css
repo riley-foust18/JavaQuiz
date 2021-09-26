@@ -34,6 +34,12 @@ body {
   margin: 10px;
 }
 
+.view-highscore {
+  background-color: rgb(59, 113, 212);
+  border: 2px solid black;
+  border-radius: 3px;
+}
+
 .btn {
   margin: 5px;
   padding: 10px;
@@ -44,7 +50,7 @@ body {
   font-size: 20px;
 }
 
-.btn:hover, .submit:hover {
+.btn:hover, .submit:hover, .view-highscore:hover {
   background-color: rgb(105, 147, 226);
 }
 
@@ -76,7 +82,24 @@ body {
   border-radius: 3px;
 }
 
+.highscore-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.highscore-list {
+  width: 80%;
+  list-style: none;
+  margin: 0px;
+}
+
+.highscore-list li {
+  margin: 5px;
+  padding: 10px;
+  border: 2px solid black;
+  background-color: rgb(59, 113, 212);
+}
 
 .hide {
   display: none;
